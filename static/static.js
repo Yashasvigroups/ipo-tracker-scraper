@@ -3,6 +3,7 @@ const REGISTRAR = {
   MAASHITLA: 'MAASHITLA',
   BIGSHARE: 'BIGSHARE',
   LINKINTIME: 'LINKINTIME',
+  KFINTECH: 'KFINTECH',
 };
 
 const SCRAP_URL = {
@@ -10,6 +11,7 @@ const SCRAP_URL = {
   MAASHITLA: 'https://maashitla.com/allotment-status/public-issues',
   BIGSHARE: 'https://ipo.bigshareonline.com/IPO_Status.html',
   LINKINTIME: 'https://in.mpms.mufg.com/Initial_Offer/IPO.aspx/GetDetails',
+  KFINTECH: 'https://kosmic.kfintech.com/ipostatus/'
 };
 
 const STATUS = {

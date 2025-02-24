@@ -190,9 +190,56 @@ async function ScrapperLinkintime() {
   }
 }
 
+async function ScrapperKfintech() {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  let res = await page.goto(SCRAP_URL.KFINTECH);
+
+  let content = (await res?.text()) || '';
+  const $ = cheerio.load(content);
+  let options = $('[id="ddl_ipo"]').children();
+
+  const companyCodeMap = {};
+  for (let i = 1; i < options.length; ++i) {
+    companyCodeMap[options[i].attribs.value] = options[i].children[0]?.data;
+  }
+  let codes = Object.keys(companyCodeMap);
+  let calls = codes.map((code) =>
+    Company.countDocuments({ companyCode: code })
+  );
+
+  let result = await Promise.all(calls);
+  let createCalls = [],
+    newCompanies = [];
+
+  for (let i = 0; i < result.length; ++i) {
+    if (result[i] == 0) {
+      // new entry for IPO
+      createCalls.push(
+        Company.create({
+          companyCode: codes[i],
+          companyName: companyCodeMap[codes[i]],
+          registrar: REGISTRAR.KFINTECH,
+        })
+      );
+      newCompanies.push({
+        companyCode: codes[i],
+        companyName: companyCodeMap[codes[i]],
+      });
+    }
+  }
+
+  await Promise.all(createCalls);
+  // sendMailFor(newCompanies);
+  console.log('scrapped kniftech');
+
+  await browser.close();
+}
+
 module.exports = {
   ScrapperCameo,
   ScrapperMaashitla,
   ScrapperBigshare,
   ScrapperLinkintime,
+  ScrapperKfintech
 };

@@ -5,6 +5,7 @@ const {
   ScrapperBigshare,
   ScrapperLinkintime,
   ScrapperMaashitla,
+  ScrapperKfintech
 } = require('./scrapper/scrapper');
 
 cron.schedule('1 * * * *', async () => {
@@ -17,7 +18,7 @@ cron.schedule('1 * * * *', async () => {
     ScrapperBigshare(),
     ScrapperLinkintime(),
     ScrapperMaashitla(),
-  ];
+    ScrapperKfintech()  ];
   await Promise.all(calls);
   // 3
   disconnectDB();
