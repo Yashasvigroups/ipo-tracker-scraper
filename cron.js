@@ -1,15 +1,15 @@
-const cron = require('node-cron');
-const { disconnectDB, establishConnection } = require('./dbConnection');
+const cron = require("node-cron");
+const { disconnectDB, establishConnection } = require("./dbConnection");
 const {
   ScrapperCameo,
   ScrapperBigshare,
   ScrapperLinkintime,
   ScrapperMaashitla,
-  ScrapperKfintech
-} = require('./scrapper/scrapper');
+  ScrapperKfintech,
+} = require("./scrapper/scrapper");
 
-cron.schedule('1 * * * *', async () => {
-  console.log('scrapping started');
+cron.schedule("*/29 * * * *", async () => {
+  console.log("scrapping started");
   // 1
   await establishConnection();
   // 2
@@ -18,9 +18,10 @@ cron.schedule('1 * * * *', async () => {
     ScrapperBigshare(),
     ScrapperLinkintime(),
     ScrapperMaashitla(),
-    ScrapperKfintech()  ];
+    ScrapperKfintech(),
+  ];
   await Promise.all(calls);
   // 3
   disconnectDB();
-  console.log('scrapping ended');
+  console.log("scrapping ended");
 });

@@ -1,4 +1,4 @@
-const { transporter } = require('./transporter');
+const { transporter } = require("./transporter");
 
 async function sendMail(userEmail, userName, companyName) {
   const mailOptions = {
@@ -10,9 +10,9 @@ async function sendMail(userEmail, userName, companyName) {
 
   try {
     let res = await transporter.sendMail(mailOptions);
-    console.log('sent mail', res);
+    console.log("sent mail", res);
   } catch (err) {
-    console.log('Failed sending mail');
+    console.log("Failed sending mail");
   }
 }
 

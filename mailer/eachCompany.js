@@ -1,5 +1,5 @@
-const { User } = require('../schema/user.schema');
-const { sendMail } = require('./sender');
+const { User } = require("../schema/user.schema");
+const { sendMail } = require("./sender");
 
 async function sendMailFor(companies) {
   if (!companies || companies.length == 0) return;
