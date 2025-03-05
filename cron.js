@@ -8,6 +8,7 @@ const {
   ScrapperKfintech,
 } = require("./scrapper/scrapper");
 
+console.log("Crons scheduled");
 cron.schedule("*/29 * * * *", async () => {
   console.log("scrapping started");
   // 1
